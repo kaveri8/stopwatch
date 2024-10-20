@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      article {
+        margin-top: 50px;
+        height: 250px;
+        width: 500px;
+        border: 2px solid;
+        border-radius: 10px;
+        background-color: rgb(96, 151, 151);
+        box-shadow: 2px 1px 2px 2px wheat;
+        background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWGNnlvR10sY3jn6-xUAoRIYuAz0KodHzLow&s);
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        /* background-color: black; */
+        /* background: url(https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?cs=srgb&dl=pexels-padrinan-255379.jpg&fm=jpg); */
+      }
+      .stopwatch {
+        text-align: center;
+      }
+      .display {
+        font-size: 40px;
+        margin-bottom: 20px;
+      }
+      .hours,
+      .minutes,
+      .seconds {
+        margin: 0 10px;
+      }
+      button {
+        margin: 0 10px;
+        padding: 7px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: rgb(222, 222, 233);
+        text-align: center;
+        border-radius: 5px;
+      }
+      button:hover {
+        background-color: burlywood;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <article>
+      <div class="stopwatch">
+        <h1>Stop Watch</h1>
+        <div class="display">
+          <span class="hours">00</span>: <span class="minutes">00</span>:
+          <span class="seconds">00</span>
+        </div>
+        <button class="start">Start</button>
+        <button class="stop">Stop</button>
+        <button class="reset">Reset</button>
+      </div>
+    </article>
+    <script>
+      let hours = 0;
+      let minutes = 0;
+      let seconds = 0;
+      let interval;
+
+      document.querySelector(".start").addEventListener("click", start);
+      document.querySelector(".stop").addEventListener("click", stop);
+      document.querySelector(".reset").addEventListener("click", reset);
+
+      function start() {
+        if (!interval) {
+          interval = setInterval(() => {
+            seconds++;
+            if (seconds >= 60) {
+              minutes++;
+              seconds = 0;
+            }
+            if (minutes >= 60) {
+              hours++;
+              minutes = 0;
+            }
+            updateDisplay();
+          }, 1000);
+        }
+      }
+
+      function stop() {
+        clearInterval(interval);
+        interval = null; // Ensures interval is cleared
+      }
+
+      function reset() {
+        stop(); // Stop the stopwatch when reset is clicked
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+        updateDisplay();
+      }
+
+      function updateDisplay() {
+        document.querySelector(".hours").textContent = pad(hours);
+        document.querySelector(".minutes").textContent = pad(minutes);
+        document.querySelector(".seconds").textContent = pad(seconds);
+      }
+
+      function pad(value) {
+        return value.toString().padStart(2, "0");
+      }
+    </script>
+  </body>
+</html>
